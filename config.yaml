@@ -1,0 +1,65 @@
+# ETH余额监控工具配置文件
+
+# RPC连接设置
+rpc_settings:
+  provider_url: "https://ethereum.publicnode.com"  # 公共节点（仅供测试）
+  request_timeout: 30
+  retry_attempts: 3
+
+# 监控设置
+monitoring:
+  check_interval_seconds: 3  # 检查间隔(秒)
+  memory_only: true           # 仅内存存储，不持久化
+
+# 监控地址配置
+addresses:
+  - name: "euler"
+    address: "0x3573A84Bee11D49A1CbCe2b291538dE7a7dD81c6"
+    tokens:
+      - name: "USDC"
+        contract_address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48"
+        decimals: 6
+        thresholds:
+          min_balance: 2000000      # 最小余额阈值
+          max_balance: 50000000  # 最大余额阈值
+          change_percentage_up: 90.0    # 上涨百分比阈值
+          change_percentage_down: 10.0  # 下跌百分比阈值
+          change_time_window_minutes: 1  # 变化百分比监控时间窗口(分钟)
+
+  - name: "curve"
+    address: "0x72310daaed61321b02b08a547150c07522c6a976"
+    tokens:
+      - name: "USDC"
+        contract_address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eb48"
+        decimals: 6
+        thresholds:
+          min_balance: 7000000
+          max_balance: 200000000
+          change_percentage_up: 90.0
+          change_percentage_down: 15.0
+          change_time_window_minutes: 1  # 变化百分比监控时间窗口(分钟)
+      
+      - name: "USDF"
+        contract_address: "0xFa2B947eEc368f42195f24F36d2aF29f7c24CeC2"
+        decimals: 18
+        thresholds:
+          min_balance: 20
+          max_balance: 30000000
+          change_percentage_up: 20.0
+          change_percentage_down: 90.0
+          change_time_window_minutes: 1  # 变化百分比监控时间窗口(分钟)
+
+# 报警设置
+alert_settings:
+  sound_enabled: true
+  sound_file_path: "alert.wav"      # 声音文件路径
+  sound_repeat_count: 10             # 声音重复次数
+  sound_interval_seconds: 2         # 声音间隔(秒)
+  sound_duration_seconds: 2         # 单次播放时长(秒)
+  alert_cooldown_minutes: 5         # 报警冷却时间(分钟)
+  log_alerts: true                  # 是否记录报警日志
+
+# 日志设置
+logging:
+  level: "INFO"                     # 日志级别: DEBUG, INFO, WARNING, ERROR
+  console_only: true                # 仅控制台输出，不保存日志文件
